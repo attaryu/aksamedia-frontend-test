@@ -1,16 +1,11 @@
-'use client';
-
-import { Moon, Sun, TvMinimal } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
-
-import { Button } from './Button';
 
 type Theme = 'light' | 'dark' | 'system';
 
 const KEY = 'theme';
 
-export function ThemeButton() {
-	const [theme, setTheme] = useState<Theme>('system');
+export function useTheme(value: Theme = 'system') {
+	const [_theme, _setTheme] = useState<Theme>(value);
 
 	const setHTMLClass = useCallback((theme: Theme) => {
 		if (theme === 'system') {
@@ -25,30 +20,37 @@ export function ThemeButton() {
 		document.documentElement.className = theme;
 	}, []);
 
+	const setCache = useCallback(
+		(theme: Theme) => localStorage.setItem(KEY, theme),
+		[]
+	);
+
 	const toggleTheme = useCallback(() => {
 		const newTheme =
-			theme === 'light' ? 'dark' : theme === 'dark' ? 'system' : 'light';
+			_theme === 'light' ? 'dark' : _theme === 'dark' ? 'system' : 'light';
 
-		setTheme(newTheme);
-		localStorage.setItem(KEY, newTheme);
-
+		_setTheme(newTheme);
+		setCache(newTheme);
 		setHTMLClass(newTheme);
-	}, [theme, setHTMLClass]);
+	}, [_theme, setHTMLClass, setCache]);
+
+	const setTheme = useCallback(
+		(value: Theme) => {
+			_setTheme(value);
+			setCache(value);
+			setHTMLClass(value);
+		},
+		[setCache, setHTMLClass]
+	);
 
 	useEffect(() => {
 		const storedThemePreference = localStorage.getItem(KEY) as Theme | null;
 
 		if (storedThemePreference) {
-			setTheme(storedThemePreference);
+			_setTheme(storedThemePreference);
 			setHTMLClass(storedThemePreference);
 		}
 	}, [setHTMLClass]);
 
-	return (
-		<Button onClick={toggleTheme} variant="secondary" className="p-2.5">
-			{theme === 'light' && <Sun className="w-5 h-5" />}
-			{theme === 'dark' && <Moon className="w-5 h-5" />}
-			{theme === 'system' && <TvMinimal className="w-5 h-5" />}
-		</Button>
-	);
+	return { theme: _theme, toggleTheme, setTheme };
 }

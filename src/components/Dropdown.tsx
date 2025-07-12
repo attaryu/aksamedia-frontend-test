@@ -5,7 +5,7 @@ import { Menu } from 'lucide-react';
 import Link from 'next/link';
 import { useCallback, useState } from 'react';
 
-import { tailwindMerge } from '@/utils/tailwindMerge';
+import { Button } from './Button';
 
 type DropdownLinkItem = {
 	type: 'link';
@@ -51,25 +51,31 @@ export function Dropdown({ onOpenChange, open, placeholder, items }: Props) {
 
 	return (
 		<div className="relative">
-			<button
+			<Button
 				onClick={handleOpenChange}
-				className={tailwindMerge('p-1.5 bg-white text-primary-300 rounded-lg')}
+				variant="secondary"
+				className="bg-white p-2 dark:bg-transparent"
 			>
 				{placeholder ?? <Menu />}
-			</button>
+			</Button>
 
 			{isOpen && (
 				<div className="absolute right-0 mt-2 max-w-48 bg-white border border-zinc-300 rounded-lg shadow-lg flex flex-col">
 					{items.map((item) =>
 						item.type === 'link' ? (
-							<Link href={item.href} key={item.href} className="py-1.5 px-2.5">
+							<Link
+								href={item.href}
+								key={item.href}
+								onClick={handleOpenChange}
+								className="py-2 px-3"
+							>
 								{item.title}
 							</Link>
 						) : (
 							<button
 								onClick={item.onClick}
 								key={item.title}
-								className="py-1.5 px-2.5"
+								className="py-2 px-3"
 							>
 								{item.title}
 							</button>
