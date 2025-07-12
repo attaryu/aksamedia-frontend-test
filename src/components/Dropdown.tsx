@@ -3,7 +3,7 @@
 import { Menu } from 'lucide-react';
 
 import Link from 'next/link';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { Button } from './Button';
 
@@ -28,8 +28,13 @@ type Props = {
 	items: DropdownItem[];
 };
 
+/**
+ * Dropdown component that displays a button to toggle the dropdown menu.
+ * The dropdown can contain links or buttons.
+ */
 export function Dropdown({ onOpenChange, open, placeholder, items }: Props) {
 	const [isOpen, setOpen] = useState(open || false);
+	const buttonRef = useRef<HTMLButtonElement>(null);
 
 	const handleOpenChange = useCallback(() => {
 		const newOpenState = !isOpen;
@@ -40,6 +45,9 @@ export function Dropdown({ onOpenChange, open, placeholder, items }: Props) {
 			onOpenChange(newOpenState);
 		}
 
+		/**
+		 * Prevent body scroll when dropdown is open.
+		 */
 		if (newOpenState) {
 			document.body.style.height = '100vh';
 			document.body.style.overflow = 'hidden';
@@ -49,9 +57,32 @@ export function Dropdown({ onOpenChange, open, placeholder, items }: Props) {
 		}
 	}, [isOpen, onOpenChange]);
 
+	useEffect(() => {
+		const handleClickOutside = (event: MouseEvent) => {
+			const target = event.target as HTMLElement;
+
+			if (
+				isOpen &&
+				buttonRef.current &&
+				!buttonRef.current.contains(target) && // check if the click is outside the button
+				!target.closest('.dropdown-menu') // check if the click is outside the dropdown menu
+			) {
+				handleOpenChange();
+			}
+		};
+
+		window.addEventListener('click', handleClickOutside);
+
+		return () => {
+			window.removeEventListener('click', handleClickOutside);
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [handleOpenChange]);
+
 	return (
 		<div className="relative">
 			<Button
+				ref={buttonRef}
 				onClick={handleOpenChange}
 				variant="secondary"
 				className="bg-white p-2 dark:bg-transparent"
@@ -60,7 +91,7 @@ export function Dropdown({ onOpenChange, open, placeholder, items }: Props) {
 			</Button>
 
 			{isOpen && (
-				<div className="absolute right-0 mt-2 max-w-48 bg-white border border-zinc-300 rounded-lg shadow-lg flex flex-col">
+				<div className="dropdown-menu absolute right-0 mt-2 max-w-48 bg-white border border-zinc-300 rounded-lg shadow-lg flex flex-col dark:bg-zinc-900 dark:border-zinc-700 dark:text-white">
 					{items.map((item) =>
 						item.type === 'link' ? (
 							<Link
