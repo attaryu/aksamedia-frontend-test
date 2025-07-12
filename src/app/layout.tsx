@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+
 import { Poppins } from 'next/font/google';
 
 import { Navbar } from '@/components/Navbar';
@@ -12,7 +13,10 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-	title: 'Noto',
+	title: {
+		default: 'Noto - A Modern Note-Taking App',
+		template: '%s | Noto',
+	},
 	description: 'Noto is a modern, minimalistic note-taking web application.',
 };
 
@@ -24,7 +28,7 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body
-				className={`${poppins.variable} antialiased dark:bg-zinc-950 bg-primary-100`}
+				className={`${poppins.variable} antialiased dark:bg-zinc-950 pt-24`}
 			>
 				<Navbar />
 
