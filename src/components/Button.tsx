@@ -8,7 +8,7 @@ interface Props
 	extends React.ButtonHTMLAttributes<HTMLButtonElement>,
 		VariantProps<typeof buttonStyles> {}
 
-const buttonStyles = cva('py-2 px-3 font-semibold rounded-lg', {
+const buttonStyles = cva('py-2 px-3 font-semibold rounded-lg flex gap-3', {
 	variants: {
 		variant: {
 			primary: 'bg-primary-300 text-white dark:bg-zinc-950 dark:text-white',
