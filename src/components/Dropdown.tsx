@@ -1,6 +1,6 @@
 'use client';
 
-import { Menu } from 'lucide-react';
+import { EllipsisVertical, Menu } from 'lucide-react';
 
 import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -85,9 +85,16 @@ export function Dropdown({ onOpenChange, open, placeholder, items }: Props) {
 				ref={buttonRef}
 				onClick={handleOpenChange}
 				variant="secondary"
-				className="bg-white p-2 dark:bg-transparent"
+				className="bg-white p-2 gap-2 dark:bg-transparent"
 			>
-				{placeholder ?? <Menu />}
+				{placeholder ? (
+					<>
+						{placeholder}
+						<EllipsisVertical size={18} />
+					</>
+				) : (
+					<Menu />
+				)}
 			</Button>
 
 			{isOpen && (

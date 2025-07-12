@@ -1,11 +1,15 @@
 import type { VariantProps } from 'class-variance-authority';
+import type { ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
 
 import { cva } from 'class-variance-authority';
 
 import { tailwindMerge } from '@/utils/tailwindMerge';
 
 interface Props
-	extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+	extends DetailedHTMLProps<
+			ButtonHTMLAttributes<HTMLButtonElement>,
+			HTMLButtonElement
+		>,
 		VariantProps<typeof buttonStyles> {}
 
 const buttonStyles = cva('py-2 px-3 font-semibold rounded-lg flex gap-3', {
