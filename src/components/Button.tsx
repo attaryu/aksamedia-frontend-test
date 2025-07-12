@@ -15,9 +15,9 @@ interface Props
 const buttonStyles = cva('py-2 px-3 font-semibold items-center justify-center rounded-lg flex gap-3', {
 	variants: {
 		variant: {
-			primary: 'bg-primary-300 text-white dark:bg-zinc-950 dark:text-white',
+			primary: 'bg-primary-300 text-white dark:bg-zinc-100 dark:text-zinc-900',
 			secondary:
-				'border border-primary-400 text-primary-400 dark:text-zinc-300 dark:border-zinc-300',
+				'border border-primary-400 text-primary-400 dark:text-zinc-300 dark:border-zinc-400',
 		},
 	},
 	defaultVariants: {
