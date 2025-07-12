@@ -1,6 +1,12 @@
+import type { DetailedHTMLProps, InputHTMLAttributes } from 'react';
+
 import { tailwindMerge } from '@/utils/tailwindMerge';
 
-interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
+interface Props
+	extends DetailedHTMLProps<
+		InputHTMLAttributes<HTMLInputElement>,
+		HTMLInputElement
+	> {
 	type: 'text' | 'email' | 'password';
 }
 

@@ -9,7 +9,7 @@ interface Props extends VariantProps<typeof textStyles> {
 	className?: string;
 }
 
-const textStyles = cva('dark:text-white', {
+const textStyles = cva('dark:text-zinc-100', {
 	variants: {
 		styling: {
 			h1: 'text-4xl font-bold',

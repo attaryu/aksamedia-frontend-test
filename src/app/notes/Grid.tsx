@@ -7,7 +7,7 @@ import { MasonryGrid } from '@/components/Masonry';
 import { NoteCard } from '@/components/NoteCard';
 import { Text } from '@/components/Text';
 
-const noteDummy: INote[] = [
+export const noteDummy: INote[] = [
 	{
 		id: '1',
 		title: 'Lorem, ipsum dolor.',

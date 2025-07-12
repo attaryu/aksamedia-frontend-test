@@ -29,7 +29,7 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body
-				className={`${poppins.variable} antialiased dark:bg-zinc-950 pt-24`}
+				className={`${poppins.variable} antialiased dark:bg-zinc-950 pt-20`}
 			>
 				<NuqsAdapter>
 					<Navbar />
