@@ -9,7 +9,7 @@ export function Input({ className, ...props }: Props) {
 		<input
 			{...props}
 			className={tailwindMerge(
-				'p-3 outline outline-zinc-500 dark:text-white dark:placeholder:text-zinc-600  dark:outline-zinc-600 rounded-xl invalid:outline-red-400 invalid:text-red-400 focus:valid:outline-primary-300 focus:valid:text-primary-300',
+				'p-3 outline outline-zinc-500 dark:text-white dark:placeholder:text-zinc-600  dark:outline-zinc-600 rounded-xl focus:invalid:outline-red-400 focus:invalid:text-red-400 focus:valid:outline-primary-300 focus:valid:text-primary-300',
 				className
 			)}
 		/>
