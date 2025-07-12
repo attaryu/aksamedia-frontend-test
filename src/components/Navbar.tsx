@@ -26,9 +26,12 @@ export function Navbar() {
 				</Button>
 
 				<Dropdown
+					placeholder="Hello, User!"
 					items={[
 						{ type: 'link', title: 'Home', href: '/' },
-						{ type: 'link', title: 'Login', href: '/login' },
+						{ type: 'link', title: 'Notes', href: '/notes' },
+						{ type: 'link', title: 'Profiles', href: '/profile' },
+						// { type: 'link', title: 'Login', href: '/login' },
 					]}
 				/>
 			</div>
