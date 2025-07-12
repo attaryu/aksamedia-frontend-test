@@ -5,6 +5,7 @@ import { Poppins } from 'next/font/google';
 import { Navbar } from '@/components/Navbar';
 
 import './globals.css';
+import { NuqsAdapter } from 'nuqs/adapters/next';
 
 const poppins = Poppins({
 	weight: ['300', '400', '500', '600', '700'],
@@ -30,9 +31,11 @@ export default function RootLayout({
 			<body
 				className={`${poppins.variable} antialiased dark:bg-zinc-950 pt-24`}
 			>
-				<Navbar />
+				<NuqsAdapter>
+					<Navbar />
 
-				{children}
+					{children}
+				</NuqsAdapter>
 			</body>
 		</html>
 	);

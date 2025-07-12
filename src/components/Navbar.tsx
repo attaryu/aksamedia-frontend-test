@@ -11,7 +11,7 @@ export function Navbar() {
 	const { theme, toggleTheme } = useTheme('system');
 
 	return (
-		<nav className="flex bg-primary-300 min-h-20 dark:bg-zinc-900 fixed top-0 inset-x-0 px-4 items-center justify-between">
+		<nav className="flex z-50 bg-primary-300 min-h-16 dark:bg-zinc-900 fixed top-0 inset-x-0 px-4 items-center justify-between">
 			<p className="font-bold text-white text-xl">Noto</p>
 
 			<div className="flex gap-2">
