@@ -4,6 +4,9 @@ type Theme = 'light' | 'dark' | 'system';
 
 const KEY = 'theme';
 
+/**
+ * Custom hook to manage theme state.
+ */
 export function useTheme(value: Theme = 'system') {
 	const [_theme, _setTheme] = useState<Theme>(value);
 
@@ -14,6 +17,7 @@ export function useTheme(value: Theme = 'system') {
 			).matches
 				? 'dark'
 				: 'light';
+
 			return;
 		}
 
@@ -43,14 +47,29 @@ export function useTheme(value: Theme = 'system') {
 		[setCache, setHTMLClass]
 	);
 
+	/**
+	 * Run every time the component mounts to check for stored theme preference.
+	 */
 	useEffect(() => {
 		const storedThemePreference = localStorage.getItem(KEY) as Theme | null;
 
 		if (storedThemePreference) {
-			_setTheme(storedThemePreference);
-			setHTMLClass(storedThemePreference);
+			setTheme(storedThemePreference);
 		}
-	}, [setHTMLClass]);
+	}, [setTheme]);
 
-	return { theme: _theme, toggleTheme, setTheme };
+	return {
+		/**
+		 * Current theme state.
+		 */
+		theme: _theme,
+		/**
+		 * Function to toggle between light, dark, and system themes.
+		 */
+		toggleTheme,
+		/**
+		 * Function to set a specific theme.
+		 */
+		setTheme,
+	};
 }
