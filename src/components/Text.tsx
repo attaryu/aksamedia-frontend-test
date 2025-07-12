@@ -16,7 +16,7 @@ const textStyles = cva('dark:text-white', {
 			h2: 'text-3xl font-semibold',
 			h3: 'text-2xl font-semibold',
 			p: 'text-base text-zinc-800 dark:text-zinc-300',
-			small: 'text-sm font-semibold text-zinc-400 dark:text-zinc-600',
+			small: 'text-sm text-zinc-400 dark:text-zinc-600',
 		},
 	},
 	defaultVariants: {
