@@ -12,18 +12,22 @@ interface Props
 		>,
 		VariantProps<typeof buttonStyles> {}
 
-const buttonStyles = cva('py-2 px-3 font-semibold items-center justify-center rounded-lg flex gap-3', {
-	variants: {
-		variant: {
-			primary: 'bg-primary-300 text-white dark:bg-zinc-100 dark:text-zinc-900',
-			secondary:
-				'border border-primary-400 text-primary-400 dark:text-zinc-300 dark:border-zinc-400',
+const buttonStyles = cva(
+	'py-2 px-3 font-semibold items-center justify-center rounded-lg flex gap-3',
+	{
+		variants: {
+			variant: {
+				primary:
+					'bg-primary-300 text-white dark:bg-zinc-100 dark:text-zinc-900 ',
+				secondary:
+					'border border-primary-400 text-primary-400 dark:text-zinc-300 dark:border-zinc-400  disabled:text-primary-100 disabled:border-primary-100 dark:disabled:text-zinc-600 dark:disabled:border-zinc-600',
+			},
 		},
-	},
-	defaultVariants: {
-		variant: 'primary',
-	},
-});
+		defaultVariants: {
+			variant: 'primary',
+		},
+	}
+);
 
 export function Button({ variant, className, ...props }: Props) {
 	return (
