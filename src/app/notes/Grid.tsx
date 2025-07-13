@@ -3,10 +3,10 @@
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
 
-import { Input } from '@/components/Input';
 import { MasonryGrid } from '@/components/Masonry';
 import { NoteCard } from '@/components/NoteCard';
 import { PaginationController } from '@/components/PaginationController';
+import Searchbar from '@/components/Searchbar';
 import { Text } from '@/components/Text';
 
 import { paginationNoteDummy } from '@/fake-backend';
@@ -24,7 +24,7 @@ export default function Grid() {
 				</section>
 
 				<section className="space-y-6">
-					<Input type="text" className="w-full" placeholder="Search by title" />
+					<Searchbar placeholder="Search by title" />
 
 					<MasonryGrid.Container>
 						{paginationNoteDummy.data.map((note) => (
