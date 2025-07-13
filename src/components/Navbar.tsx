@@ -1,14 +1,46 @@
 'use client';
 
+import type { DropdownItem } from './Dropdown';
+
 import { Moon, Sun, TvMinimal } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useMemo } from 'react';
 
 import { Button } from './Button';
 import { Dropdown } from './Dropdown';
 
 import { useTheme } from '@/hooks/useTheme';
 
+import { useUserStore } from '@/stores/user';
+
 export function Navbar() {
+	const router = useRouter();
 	const { theme, toggleTheme } = useTheme('system');
+	const userStore = useUserStore();
+
+	const dropdownItem = useMemo(
+		(): DropdownItem[] =>
+			userStore.user.loggedIn
+				? [
+						{ type: 'link', title: 'Home', href: '/' },
+						{ type: 'link', title: 'Notes', href: '/notes' },
+						{ type: 'link', title: 'Profile', href: '/profile' },
+						{
+							type: 'button',
+							variant: 'secondary',
+							title: 'Logout',
+							onClick: () => {
+								userStore.logoutUser();
+								router.push('/login');
+							},
+						},
+				  ]
+				: [
+						{ type: 'link', title: 'Home', href: '/' },
+						{ type: 'link', title: 'Login', href: '/login' },
+				  ],
+		[router, userStore]
+	);
 
 	return (
 		<nav className="flex z-50 bg-primary-300 min-h-16 dark:bg-zinc-800 fixed top-0 inset-x-0 px-4 items-center justify-between">
@@ -26,13 +58,12 @@ export function Navbar() {
 				</Button>
 
 				<Dropdown
-					placeholder="Hello, User!"
-					items={[
-						{ type: 'link', title: 'Home', href: '/' },
-						{ type: 'link', title: 'Notes', href: '/notes' },
-						{ type: 'link', title: 'Profiles', href: '/profile' },
-						// { type: 'link', title: 'Login', href: '/login' },
-					]}
+					placeholder={
+						userStore.user.loggedIn
+							? `Hello, ${userStore.user.shortName}!`
+							: undefined
+					}
+					items={dropdownItem}
 				/>
 			</div>
 		</nav>

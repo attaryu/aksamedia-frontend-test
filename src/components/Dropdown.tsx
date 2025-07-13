@@ -17,9 +17,10 @@ type DropdownButtonItem = {
 	type: 'button';
 	onClick: () => void;
 	title: string;
+	variant: 'primary' | 'secondary';
 };
 
-type DropdownItem = DropdownLinkItem | DropdownButtonItem;
+export type DropdownItem = DropdownLinkItem | DropdownButtonItem;
 
 type Props = {
 	open?: boolean;
@@ -81,18 +82,14 @@ export function Dropdown({ onOpenChange, open, placeholder, items }: Props) {
 				dropdownRef.current.style.bottom = '100%';
 			}
 
-			if (buttonDimension.left < horizontalLeft) {
-				dropdownRef.current.style.left = '0';
-			}
-
-			if (buttonDimension.right > horizontalCenter) {
+			if (buttonDimension.left > horizontalCenter) {
 				dropdownRef.current.style.right = '0';
-			}
-
-			if (buttonDimension.left > horizontalLeft) {
+			} else if (buttonDimension.left > horizontalLeft) {
 				dropdownRef.current.style.left = `${
 					buttonDimension.width / 2 - dropdownDimension.width / 2
 				}px`;
+			} else if (buttonDimension.left < horizontalLeft) {
+				dropdownRef.current.style.left = '0';
 			}
 		}
 	}, [isOpen]);
@@ -139,7 +136,7 @@ export function Dropdown({ onOpenChange, open, placeholder, items }: Props) {
 
 			{isOpen && (
 				<div
-					className="dropdown-menu absolute max-w-48 bg-white border border-zinc-300 rounded-lg shadow-lg dark:shadow-white/10 flex flex-col dark:bg-zinc-900 dark:border-zinc-600 dark:text-white max-h-[45dvh] overflow-y-auto my-2"
+					className="dropdown-menu absolute bg-white border border-zinc-300 rounded-lg shadow-lg dark:shadow-white/10 flex flex-col dark:bg-zinc-900 dark:border-zinc-600 dark:text-white max-h-[45dvh] w-fit overflow-y-auto my-2"
 					ref={dropdownRef}
 				>
 					{items.map((item) =>
@@ -153,13 +150,14 @@ export function Dropdown({ onOpenChange, open, placeholder, items }: Props) {
 								{item.title}
 							</Link>
 						) : (
-							<button
+							<Button
 								onClick={itemClickHandler(item.onClick)}
 								key={item.title}
-								className="py-2 px-3 min-w-24"
+								variant={item.variant}
+								className="m-1 min-w-24 py-2 px-3"
 							>
 								{item.title}
-							</button>
+							</Button>
 						)
 					)}
 				</div>

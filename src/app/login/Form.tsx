@@ -8,25 +8,26 @@ import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
 import { Text } from '@/components/Text';
 
-import { useUserController } from '@/fake-backend';
+import { useUserStore } from '@/stores/user';
 
 export function Form() {
-	const userController = useUserController();
 	const router = useRouter();
+	const userStore = useUserStore();
 
 	const submitHandler = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		const response = userController.loginUser(
+		const response = userStore.loginUser(
 			event.currentTarget.email.value,
 			event.currentTarget.password.value
 		);
 
 		if (response === true) {
 			alert('Login successful!');
+
 			router.push('/notes');
 		} else {
-			alert(response);
+			alert(response ?? 'Login failed. Please try again.');
 		}
 	};
 

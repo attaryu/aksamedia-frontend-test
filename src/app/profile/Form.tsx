@@ -1,24 +1,19 @@
 'use client';
 
-import type { IUpdateUser } from '@/fake-backend/entities/user';
-
 import { parseAsBoolean, useQueryState } from 'nuqs';
 
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
 
-const dummyUser: IUpdateUser = {
-	username: 'john_doe',
-	fullName: 'John Doe',
-	email: 'johndoe@mail.com',
-	password: 'password',
-};
+import { useUserStore } from '@/stores/user';
 
 export default function Form() {
 	const [isEditMode, setEditMode] = useQueryState<boolean>('edit', {
 		defaultValue: false,
 		parse: parseAsBoolean.parse,
 	});
+
+	const userStore = useUserStore();
 
 	const toggleEditMode = () => {
 		setEditMode((prev) => !prev);
@@ -33,7 +28,16 @@ export default function Form() {
 					placeholder="Fullname"
 					disabled={!isEditMode}
 					className="w-full"
-					defaultValue={dummyUser.fullName}
+					defaultValue={userStore.user.fullName}
+				/>
+
+				<Input
+					type="text"
+					name="surname"
+					placeholder="Short Name"
+					disabled={!isEditMode}
+					className="w-full"
+					defaultValue={userStore.user.shortName}
 				/>
 
 				<Input
@@ -42,7 +46,7 @@ export default function Form() {
 					placeholder="Username"
 					disabled={!isEditMode}
 					className="w-full"
-					defaultValue={dummyUser.username}
+					defaultValue={userStore.user.username}
 				/>
 
 				<Input
@@ -51,7 +55,7 @@ export default function Form() {
 					placeholder="Email"
 					disabled={!isEditMode}
 					className="w-full"
-					defaultValue={dummyUser.email}
+					defaultValue={userStore.user.email}
 				/>
 
 				<Input
@@ -60,7 +64,7 @@ export default function Form() {
 					placeholder="Password"
 					disabled={!isEditMode}
 					className="w-full"
-					defaultValue={dummyUser.password}
+					defaultValue={userStore.user.password}
 				/>
 			</div>
 

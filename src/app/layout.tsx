@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 
 import { Poppins } from 'next/font/google';
+import { NuqsAdapter } from 'nuqs/adapters/next';
 
 import { Navbar } from '@/components/Navbar';
 
 import './globals.css';
-import { NuqsAdapter } from 'nuqs/adapters/next';
 
 const poppins = Poppins({
 	weight: ['300', '400', '500', '600', '700'],

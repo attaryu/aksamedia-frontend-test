@@ -9,14 +9,18 @@ import { PaginationController } from '@/components/PaginationController';
 import { Searchbar } from '@/components/Searchbar';
 import { Text } from '@/components/Text';
 
+import { useUserStore } from '@/stores/user';
+
 import { paginationNoteDummy } from '@/fake-backend';
 
 export default function Grid() {
+	const userStore = useUserStore();
+
 	return (
 		<>
 			<div className="space-y-12 px-4 pb-4 pt-12">
 				<section className="space-y-2">
-					<Text tag="h1">Welcome, Guest!</Text>
+					<Text tag="h1">Welcome, {userStore.user.shortName}!</Text>
 
 					<Text tag="p">
 						Here are your notes. You can edit or delete them as needed.
@@ -44,7 +48,6 @@ export default function Grid() {
 
 			<div className="fixed bottom-4 left-4 shadow-xl dark:shadow-zinc-100/5">
 				<PaginationController
-					activePage={paginationNoteDummy.pagination.currentPage}
 					totalPages={paginationNoteDummy.pagination.totalPage}
 				/>
 			</div>

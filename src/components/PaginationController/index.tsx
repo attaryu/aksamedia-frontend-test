@@ -1,26 +1,32 @@
 'use client';
 
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import type { DropdownItem } from '../Dropdown';
 
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { parseAsInteger, useQueryState } from 'nuqs';
 import { useMemo } from 'react';
+
 import { Dropdown } from '../Dropdown';
 import { PaginationButton } from './PaginationButton';
 
 type Props = {
-	activePage: number;
 	totalPages: number;
 };
 
-export function PaginationController({ activePage, totalPages }: Props) {
-	const [page, setPage] = useQueryState(
-		'page',
-		parseAsInteger.withDefault(activePage)
-	);
+export function PaginationController({ totalPages }: Props) {
+	const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1));
 
-	const totalPagesArray = useMemo(
-		() => Array.from({ length: totalPages }, (_, i) => i + 1),
-		[totalPages]
+	const dropdownItem = useMemo(
+		() =>
+			Array.from({ length: totalPages }, (_, i) => i + 1).map(
+				(_page): DropdownItem => ({
+					type: 'button',
+					title: _page.toString(),
+					onClick: () => setPage(_page),
+					variant: _page === page ? 'primary' : 'secondary',
+				})
+			),
+		[page, setPage, totalPages]
 	);
 
 	function previousPageHandler() {
@@ -50,13 +56,7 @@ export function PaginationController({ activePage, totalPages }: Props) {
 				<ChevronRight size={20} />
 			</PaginationButton>
 
-			<Dropdown
-				items={totalPagesArray.map((page) => ({
-					type: 'button',
-					title: page.toString(),
-					onClick: () => setPage(page),
-				}))}
-			/>
+			<Dropdown items={dropdownItem} />
 		</div>
 	);
 }
