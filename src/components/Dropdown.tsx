@@ -34,16 +34,15 @@ type Props = {
  */
 export function Dropdown({ onOpenChange, open, placeholder, items }: Props) {
 	const [isOpen, setOpen] = useState(open || false);
+
 	const buttonRef = useRef<HTMLButtonElement>(null);
+	const dropdownRef = useRef<HTMLDivElement>(null);
 
 	const handleOpenChange = useCallback(() => {
 		const newOpenState = !isOpen;
 
 		setOpen(newOpenState);
-
-		if (onOpenChange) {
-			onOpenChange(newOpenState);
-		}
+		onOpenChange?.(newOpenState);
 
 		/**
 		 * Prevent body scroll when dropdown is open.
@@ -56,6 +55,40 @@ export function Dropdown({ onOpenChange, open, placeholder, items }: Props) {
 			document.body.style.overflow = '';
 		}
 	}, [isOpen, onOpenChange]);
+
+	useEffect(() => {
+		if (isOpen && buttonRef.current && dropdownRef.current) {
+			const verticalCenter = window.innerHeight / 2;
+			const horizontalLeft = window.innerWidth / 3;
+			const horizontalCenter = horizontalLeft * 2;
+
+			const buttonDimension = buttonRef.current.getBoundingClientRect();
+			const dropdownDimension = dropdownRef.current.getBoundingClientRect();
+
+			
+			if (buttonDimension.top < verticalCenter) {
+				dropdownRef.current.style.top = '100%';
+			}
+
+			if (buttonDimension.top > verticalCenter) {
+				dropdownRef.current.style.bottom = '100%';
+			}
+
+			if (buttonDimension.left < horizontalLeft) {
+				dropdownRef.current.style.left = '0';
+			}
+
+			if (buttonDimension.right > horizontalCenter) {
+				dropdownRef.current.style.right = '0';
+			}
+
+			if (buttonDimension.left > horizontalLeft) {
+				dropdownRef.current.style.left = `${
+					buttonDimension.width / 2 - dropdownDimension.width / 2
+				}px`;
+			}
+		}
+	}, [isOpen]);
 
 	useEffect(() => {
 		const handleClickOutside = (event: MouseEvent) => {
@@ -98,14 +131,17 @@ export function Dropdown({ onOpenChange, open, placeholder, items }: Props) {
 			</Button>
 
 			{isOpen && (
-				<div className="dropdown-menu absolute right-0 mt-2 max-w-48 bg-white border border-zinc-300 rounded-lg shadow-lg flex flex-col dark:bg-zinc-900 dark:border-zinc-700 dark:text-white">
+				<div
+					className="dropdown-menu absolute max-w-48 bg-white border border-zinc-300 rounded-lg shadow-lg dark:shadow-white/10 flex flex-col dark:bg-zinc-900 dark:border-zinc-600 dark:text-white max-h-[45dvh] overflow-y-auto my-2"
+					ref={dropdownRef}
+				>
 					{items.map((item) =>
 						item.type === 'link' ? (
 							<Link
 								href={item.href}
 								key={item.href}
 								onClick={handleOpenChange}
-								className="py-2 px-3"
+								className="py-2 px-3 min-w-24"
 							>
 								{item.title}
 							</Link>
@@ -113,7 +149,7 @@ export function Dropdown({ onOpenChange, open, placeholder, items }: Props) {
 							<button
 								onClick={item.onClick}
 								key={item.title}
-								className="py-2 px-3"
+								className="py-2 px-3 min-w-24"
 							>
 								{item.title}
 							</button>
