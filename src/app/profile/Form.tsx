@@ -1,13 +1,13 @@
 'use client';
 
-import type { IUser } from '@/fake-backend/entities/user';
+import type { IUpdateUser } from '@/fake-backend/entities/user';
 
 import { parseAsBoolean, useQueryState } from 'nuqs';
 
-import { Input } from '@/components/Input';
 import { Button } from '@/components/Button';
+import { Input } from '@/components/Input';
 
-const dummyUser: IUser = {
+const dummyUser: IUpdateUser = {
 	username: 'john_doe',
 	fullName: 'John Doe',
 	email: 'johndoe@mail.com',
@@ -29,7 +29,7 @@ export default function Form() {
 			<div className="space-y-4">
 				<Input
 					type="text"
-          name="fullName"
+					name="fullName"
 					placeholder="Fullname"
 					disabled={!isEditMode}
 					className="w-full"
@@ -38,7 +38,7 @@ export default function Form() {
 
 				<Input
 					type="text"
-          name="username"
+					name="username"
 					placeholder="Username"
 					disabled={!isEditMode}
 					className="w-full"
@@ -47,7 +47,7 @@ export default function Form() {
 
 				<Input
 					type="email"
-          name="email"
+					name="email"
 					placeholder="Email"
 					disabled={!isEditMode}
 					className="w-full"
@@ -56,7 +56,7 @@ export default function Form() {
 
 				<Input
 					type="password"
-          name="password"
+					name="password"
 					placeholder="Password"
 					disabled={!isEditMode}
 					className="w-full"
