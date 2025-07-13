@@ -3,7 +3,7 @@
 import { Text } from '@/components/Text';
 import { NoteForm } from '../NoteForm';
 
-import { noteDummy } from '../Grid';
+import { noteDummy } from '@/fake-backend'; 
 
 type Props = {
 	id: string;
