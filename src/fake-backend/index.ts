@@ -1,4 +1,9 @@
-import { INote } from './entities/note';
+import type { INote } from './entities/note';
+import type { DocumentSchema } from './storages/LocalStorage';
+
+import { UserController } from './controllers/implements/User';
+import { UserRepository } from './repositories/implements/User';
+import { LocalStorage } from './storages/implements/LocalStorage';
 
 export const noteDummy: INote[] = [
 	{
@@ -287,3 +292,21 @@ export const paginationNoteDummy = {
 		totalPage: Math.ceil(noteDummy.length / 10),
 	},
 };
+
+const defaultSchema: DocumentSchema = {
+	user: {
+		email: 'johndoe@example.com',
+		fullName: 'John Doe',
+		shortName: 'JD',
+		username: 'john_doe',
+		password: '12345678',
+	},
+	notes: [],
+};
+
+export function useUserController() {
+	const storage = new LocalStorage(defaultSchema);
+	const userRepository = new UserRepository(storage);
+
+	return new UserController(userRepository);
+}

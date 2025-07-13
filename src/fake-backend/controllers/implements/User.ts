@@ -1,4 +1,4 @@
-import { IUser } from '@/fake-backend/entities/user';
+import type { IUser } from '@/fake-backend/entities/user';
 import type { IUserRepository } from '@/fake-backend/repositories/User';
 import type { IUserController } from '../User';
 
@@ -8,12 +8,8 @@ export class UserController implements IUserController {
 	loginUser(email: string, password: string): true | string {
 		const user = this._userRepository.getUser();
 
-		if (user.email !== email) {
-			return 'Email does not match';
-		}
-
-		if (user.password !== password) {
-			return 'Password does not match';
+		if (user.email !== email || user.password !== password) {
+			return 'Invalid email or password';
 		}
 
 		const updatedUser = this._userRepository.updateUser({
