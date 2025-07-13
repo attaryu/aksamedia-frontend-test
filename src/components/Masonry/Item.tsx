@@ -13,13 +13,10 @@ export function MasonryItem({
 	return (
 		<li
 			/**
-			 * group-[[data-loading=true]] is used to hide the item when the container's loading 
+			 * group-[[data-loading=true]] is used to hide the item when the container's loading
 			 * state is true
 			 */
-			className={tailwindMerge(
-				'masonry-item group-[[data-loading=true]]:invisible',
-				className
-			)}
+			className={tailwindMerge('masonry-item overflow-hidden', className)}
 			{...props}
 		>
 			{/* actual height based on its children */}

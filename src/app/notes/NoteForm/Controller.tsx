@@ -1,53 +1,41 @@
 import type { RefObject } from 'react';
 
 import { Check, Pencil, Trash, X } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { parseAsBoolean, useQueryState } from 'nuqs';
-import { useCallback, useMemo, useState } from 'react';
+import { useState } from 'react';
 
 import { Button } from '@/components/Button';
 import { Text } from '@/components/Text';
 
+import { useNoteStore } from '@/stores/note';
+
 type Props = {
-	title?: string;
-	content?: string;
+	noteId?: string;
 	contentRef: RefObject<HTMLTextAreaElement | null>;
-	setTitle: (value: string) => void;
-	setContent: (value: string) => void;
+	resetHandler?: () => void;
 };
 
-export function Controller({
-	title,
-	content,
-	setTitle,
-	setContent,
-	contentRef,
-}: Props) {
-	const isDataExist = useMemo(
-		() => Boolean(title && content),
-		[title, content]
-	);
-
+export function Controller({ noteId, contentRef, resetHandler }: Props) {
+	const noteStore = useNoteStore();
+	const router = useRouter();
+	const [deleteMeasurement, setDeleteMeasurement] = useState<boolean>(false);
 	const [isEditMode, setEditMode] = useQueryState<boolean>(
 		'edit',
-		parseAsBoolean.withDefault(!isDataExist)
-	);
-	const [deleteMeasurement, setDeleteMeasurement] = useState<boolean>(false);
-
-	const editModeToggler = useCallback(
-		() => setEditMode((prev) => !prev),
-		[setEditMode]
+		parseAsBoolean.withDefault(!noteId)
 	);
 
-	const editModeCanceler = useCallback(() => {
-		setTitle(title ?? '');
-		setContent(content ?? '');
-
-		if (isDataExist) {
-			setEditMode(false);
+	const handleDelete = () => {
+		if (noteId) {
+			noteStore.deleteNote(noteId);
+			setDeleteMeasurement(false);
+			router.push('/notes');
 		}
-	}, [content, isDataExist, setContent, setEditMode, setTitle, title]);
+	};
 
-	const editModeSetter = useCallback(() => {
+	const editModeToggler = () => setEditMode((prev) => !prev);
+
+	const editModeSetter = () => {
 		if (!isEditMode) {
 			editModeToggler();
 
@@ -61,9 +49,9 @@ export function Controller({
 				}
 			}, 0);
 		}
-	}, [contentRef, editModeToggler, isEditMode]);
+	};
 
-	if (isDataExist) {
+	if (noteId) {
 		return (
 			<div className="fixed bottom-4 right-4 flex items-center gap-2">
 				{deleteMeasurement && (
@@ -72,7 +60,7 @@ export function Controller({
 							tag="small"
 							className="text-end text-xs mr-2 w-40 text-zinc-900 dark:text-zinc-300"
 						>
-							Are you sure you want to delete this note?
+							Are you sure to delete this note?
 						</Text>
 
 						<Button
@@ -87,6 +75,7 @@ export function Controller({
 							type="button"
 							className="p-3 rounded-full"
 							variant="secondary"
+							onClick={handleDelete}
 						>
 							<Check size={24} />
 						</Button>
@@ -99,7 +88,10 @@ export function Controller({
 							type="reset"
 							variant="secondary"
 							className="p-3 rounded-full"
-							onClick={editModeCanceler}
+							onClick={() => {
+								editModeToggler();
+								resetHandler?.();
+							}}
 						>
 							<X size={24} />
 						</Button>
@@ -141,7 +133,7 @@ export function Controller({
 				type="reset"
 				variant="secondary"
 				className="p-3 rounded-full"
-				onClick={editModeCanceler}
+				onClick={editModeSetter}
 			>
 				<X size={24} />
 			</Button>

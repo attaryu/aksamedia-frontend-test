@@ -2,62 +2,76 @@
 
 import type { DetailedHTMLProps, HTMLAttributes } from 'react';
 
+import { debounce } from 'lodash';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { tailwindMerge } from '@/utils/tailwindMerge';
 import { Text } from '../Text';
 
+interface Props
+	extends DetailedHTMLProps<
+		HTMLAttributes<HTMLUListElement>,
+		HTMLUListElement
+	> {
+	dependency?: unknown[];
+}
+
 /**
  * MasonryContainer component to create a responsive masonry grid layout.
  */
 export function MasonryContainer({
+	dependency = [],
 	className,
 	children,
 	...props
-}: DetailedHTMLProps<HTMLAttributes<HTMLUListElement>, HTMLUListElement>) {
+}: Props) {
 	const [isLoading, setLoading] = useState(true);
 	const containerRef = useRef<HTMLUListElement | null>(null);
 
-	const calculateMasonryGrid = useCallback(() => {
-		/**
-		 * get all direct items of the masonry container
-		 */
-		const items =
-			containerRef.current?.querySelectorAll<HTMLLIElement>('.masonry-item');
+	const calculateMasonryGrid = debounce(
+		useCallback(() => {
+			setLoading(true);
 
-		if (containerRef.current && items && items.length > 0) {
-			for (const item of items) {
-				const grid = window.getComputedStyle(containerRef.current!);
-				/**
-				 * actual element that the height is depend on custom element
-				 */
-				const actualItem = item.querySelector(
-					'.actual-masonry-item'
-				) as HTMLDivElement;
+			/**
+			 * get all direct items of the masonry container
+			 */
+			const items =
+				containerRef.current?.querySelectorAll<HTMLLIElement>('.masonry-item');
 
-				const rowGap = parseInt(grid.gap);
-				const rowHeight = parseInt(grid.gridAutoRows);
-				const actualHeight = actualItem.getBoundingClientRect().height;
+			if (containerRef.current && items && items.length > 0) {
+				for (const item of items) {
+					const grid = window.getComputedStyle(containerRef.current!);
+					/**
+					 * actual element that the height is depend on custom element
+					 */
+					const actualItem = item.querySelector(
+						'.actual-masonry-item'
+					) as HTMLDivElement;
 
-				/**
-				 * @see https://w3bits.com/css-grid-masonry/
-				 */
-				const rowSpan = Math.ceil(
-					(actualHeight + rowGap) / (rowGap + rowHeight)
-				);
+					const rowGap = parseInt(grid.gap);
+					const rowHeight = parseInt(grid.gridAutoRows);
+					const actualHeight = actualItem.getBoundingClientRect().height;
 
-				/**
-				 * Set the row span for the item based on its height
-				 */
-				item.style.gridRowEnd = `span ${rowSpan}`;
+					/**
+					 * @see https://w3bits.com/css-grid-masonry/
+					 */
+					const rowSpan = Math.ceil(
+						(actualHeight + rowGap) / (rowGap + rowHeight)
+					);
+
+					/**
+					 * Set the row span for the item based on its height
+					 */
+					item.style.gridRowEnd = `span ${rowSpan}`;
+				}
+
+				setLoading(false);
 			}
-
-			setLoading(false);
-		}
-	}, []);
+		}, []),
+		200
+	);
 
 	useEffect(() => {
-		setLoading(true);
 		calculateMasonryGrid(); // initial calculation
 
 		window.addEventListener('resize', calculateMasonryGrid);
@@ -65,7 +79,7 @@ export function MasonryContainer({
 		return () => {
 			window.removeEventListener('resize', calculateMasonryGrid);
 		};
-	}, [calculateMasonryGrid]);
+	}, [calculateMasonryGrid, dependency]);
 
 	return (
 		<ul
@@ -74,10 +88,6 @@ export function MasonryContainer({
 				`masonry-grid grid group grid-cols-2 gap-4 auto-rows-[0px]`,
 				className
 			)}
-			/**
-			 * data-loading attribute to indicate loading state for children
-			 */
-			data-loading={isLoading ? 'true' : 'false'}
 			ref={containerRef}
 		>
 			{isLoading && (

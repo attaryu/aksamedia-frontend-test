@@ -1,16 +1,24 @@
 'use client';
 
+import { Loading } from '@/components/Loading';
 import { Text } from '@/components/Text';
 import { NoteForm } from '../NoteForm';
 
-import { noteDummy } from '@/fake-backend'; 
+import { useHydrationLoading } from '@/stores/loading';
+import { useNoteStore } from '@/stores/note';
 
 type Props = {
 	id: string;
 };
 
 export function Note({ id }: Props) {
-	const note = noteDummy.find((note) => note.id === id);
+	const noteStore = useNoteStore();
+	const { isLoading } = useHydrationLoading();
+	const note = noteStore.getNote(id);
+
+	if (isLoading) {
+		return <Loading />;
+	}
 
 	if (!note) {
 		return (

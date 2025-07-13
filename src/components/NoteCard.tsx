@@ -1,6 +1,7 @@
+import type { INote } from '@/types/note';
+
 import Link from 'next/link';
 
-import { INote } from '@/fake-backend/entities/note';
 import { Text } from './Text';
 import { Time } from './Time';
 
@@ -10,7 +11,7 @@ type Props = {
 
 export function NoteCard({ data }: Props) {
 	return (
-		<section className="outline outline-primary-200 dark:outline-zinc-600 relative rounded-xl p-4 space-y-4">
+		<section className="border border-primary-200 dark:border-zinc-600 relative rounded-xl p-4 space-y-4">
 			<Text tag="h2" styling="h3" className="line-clamp-2">
 				<Link
 					href={`/notes/${data.id}`}

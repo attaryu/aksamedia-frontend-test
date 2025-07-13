@@ -9,30 +9,50 @@ import { PaginationController } from '@/components/PaginationController';
 import { Searchbar } from '@/components/Searchbar';
 import { Text } from '@/components/Text';
 
+import { useNoteStore } from '@/stores/note';
 import { useUserStore } from '@/stores/user';
-
-import { paginationNoteDummy } from '@/fake-backend';
+import { parseAsInteger, parseAsString, useQueryState } from 'nuqs';
+import { useMemo } from 'react';
+import { useHydrationLoading } from '@/stores/loading';
 
 export default function Grid() {
+	const [page] = useQueryState('page', parseAsInteger.withDefault(1));
+	const [search] = useQueryState('search', parseAsString.withDefault(''));
+
 	const userStore = useUserStore();
+	const noteStore = useNoteStore();
+	const { isLoading } = useHydrationLoading();
+
+	const paginationNotes = useMemo(
+		() => noteStore.getNotes({ page, search }),
+		[noteStore, page, search]
+	);
+
+	if (isLoading) {
+		return (
+			<div className="h-[60dvh] grid place-items-center">
+				<Text className="text-center">Loading...</Text>
+			</div>
+		);
+	}
 
 	return (
 		<>
-			<div className="space-y-12 px-4 pb-4 pt-12">
+			<div className="space-y-12 px-4 pt-12 pb-24">
 				<section className="space-y-2">
 					<Text tag="h1">Welcome, {userStore.user.shortName}!</Text>
 
 					<Text tag="p">
-						Here are your notes. You can edit or delete them as needed.
+						Here are your Nnotes. You can edit or delete them as needed.
 					</Text>
 				</section>
 
 				<section className="space-y-6">
 					<Searchbar placeholder="Search by title" />
 
-					{paginationNoteDummy.data.length ? (
-						<MasonryGrid.Container>
-							{paginationNoteDummy.data.map((note) => (
+					{paginationNotes.data.length ? (
+						<MasonryGrid.Container dependency={[page, search]}>
+							{paginationNotes.data.map((note) => (
 								<MasonryGrid.Item key={note.id} className="masonry-item">
 									<NoteCard data={note} />
 								</MasonryGrid.Item>
@@ -48,7 +68,7 @@ export default function Grid() {
 
 			<div className="fixed bottom-4 left-4 shadow-xl dark:shadow-zinc-100/5">
 				<PaginationController
-					totalPages={paginationNoteDummy.pagination.totalPage}
+					totalPages={paginationNotes.pagination.totalPage}
 				/>
 			</div>
 

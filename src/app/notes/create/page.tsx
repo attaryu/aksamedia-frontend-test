@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import CreateNote from './CreateNote';
+import { NoteForm } from '../NoteForm';
 
 export const metadata: Metadata = {
 	title: 'Create Note',
@@ -8,8 +8,8 @@ export const metadata: Metadata = {
 
 export default function CreateNotePage() {
 	return (
-    <main className="p-4">
-      <CreateNote />
-    </main>
-  );
+		<main className="p-4">
+			<NoteForm />
+		</main>
+	);
 }
