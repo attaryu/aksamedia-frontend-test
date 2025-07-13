@@ -2,6 +2,9 @@
 
 import type { INote } from '@/fake-backend/entities/note';
 
+import { Plus } from 'lucide-react';
+import Link from 'next/link';
+
 import { Input } from '@/components/Input';
 import { MasonryGrid } from '@/components/Masonry';
 import { NoteCard } from '@/components/NoteCard';
@@ -55,6 +58,13 @@ export default function Grid() {
 					))}
 				</MasonryGrid.Container>
 			</section>
+
+			<Link
+				href="/notes/create"
+				className="bg-primary-300 text-white dark:bg-zinc-100 dark:text-zinc-900 p-3 fixed right-4 bottom-4 rounded-full"
+			>
+				<Plus />
+			</Link>
 		</div>
 	);
 }
