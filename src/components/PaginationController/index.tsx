@@ -45,7 +45,7 @@ export function PaginationController({ activePage, totalPages }: Props) {
 
 			<PaginationButton
 				onClick={nextPageHandler}
-				disabled={page === totalPages}
+				disabled={page === totalPages || totalPages === 0}
 			>
 				<ChevronRight size={20} />
 			</PaginationButton>

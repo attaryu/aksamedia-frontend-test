@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { MasonryGrid } from '@/components/Masonry';
 import { NoteCard } from '@/components/NoteCard';
 import { PaginationController } from '@/components/PaginationController';
-import Searchbar from '@/components/Searchbar';
+import { Searchbar } from '@/components/Searchbar';
 import { Text } from '@/components/Text';
 
 import { paginationNoteDummy } from '@/fake-backend';
@@ -26,13 +26,19 @@ export default function Grid() {
 				<section className="space-y-6">
 					<Searchbar placeholder="Search by title" />
 
-					<MasonryGrid.Container>
-						{paginationNoteDummy.data.map((note) => (
-							<MasonryGrid.Item key={note.id} className="masonry-item">
-								<NoteCard data={note} />
-							</MasonryGrid.Item>
-						))}
-					</MasonryGrid.Container>
+					{paginationNoteDummy.data.length ? (
+						<MasonryGrid.Container>
+							{paginationNoteDummy.data.map((note) => (
+								<MasonryGrid.Item key={note.id} className="masonry-item">
+									<NoteCard data={note} />
+								</MasonryGrid.Item>
+							))}
+						</MasonryGrid.Container>
+					) : (
+						<div className="h-[35dvh] grid place-items-center">
+							<Text className="text-center">No notes found.</Text>
+						</div>
+					)}
 				</section>
 			</div>
 

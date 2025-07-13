@@ -11,7 +11,7 @@ type Props = {
 	className?: string;
 };
 
-export default function Searchbar({ className, placeholder }: Props) {
+export function Searchbar({ className, placeholder }: Props) {
 	const [searchQuery, setSearchQuery] = useQueryState(
 		'search',
 		parseAsString.withDefault('')
