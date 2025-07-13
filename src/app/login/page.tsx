@@ -4,14 +4,14 @@ import { Text } from '@/components/Text';
 
 export default function LoginPage() {
 	return (
-		<main className="h-dvh grid place-items-center">
-			<form className="bg-white dark:bg-zinc-900 p-6 rounded-xl w-5/6 shadow-md space-y-10">
+		<main className="p-4 h-[75dvh] grid place-items-center">
+			<form className="space-y-10 w-full">
 				<div className="space-y-2">
-					<Text tag="h1" styling="h2" className="text-center">
+					<Text tag="h1" styling="h2" className="">
 						Login
 					</Text>
 
-					<Text className="text-center">Please log in to continue.</Text>
+					<Text className="">Please log in to continue.</Text>
 				</div>
 
 				<div className="flex flex-col gap-4">
