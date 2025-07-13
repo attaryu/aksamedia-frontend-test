@@ -7,7 +7,6 @@ import type { INote } from '@/fake-backend/entities/note';
 import { parseAsBoolean, useQueryState } from 'nuqs';
 import { useCallback, useRef, useState } from 'react';
 
-import { Text } from '@/components/Text';
 import { Controller } from './Controller';
 
 type Props = {
@@ -17,7 +16,7 @@ type Props = {
 export function NoteForm({ note }: Props) {
 	const [isEditMode] = useQueryState<boolean>(
 		'edit',
-		parseAsBoolean.withDefault(false)
+		parseAsBoolean.withDefault(!note)
 	);
 
 	const [title, setTitle] = useState(note?.title ?? '');
@@ -26,23 +25,10 @@ export function NoteForm({ note }: Props) {
 	const contentRef = useRef<HTMLTextAreaElement>(null);
 
 	const inputChangeHandler = useCallback(
-		(fn: (value: string) => void) =>
-			(event: FormEvent<HTMLTextAreaElement>) =>
-				fn(event.currentTarget.value ?? ''),
+		(fn: (value: string) => void) => (event: FormEvent<HTMLTextAreaElement>) =>
+			fn(event.currentTarget.value ?? ''),
 		[]
 	);
-
-	if (!note) {
-		return (
-			<div className="h-[60dvh] flex flex-col items-center justify-center gap-4">
-				<Text styling="h3">Note not found</Text>
-
-				<Text tag="p" className="text-center">
-					The note you are looking for does not exist or has been deleted.
-				</Text>
-			</div>
-		);
-	}
 
 	return (
 		<form className="flex flex-col gap-4 pb-20">
@@ -50,6 +36,8 @@ export function NoteForm({ note }: Props) {
 				placeholder="Title"
 				className="w-full text-black outline-none text-xl font-semibold field-sizing-content dark:text-zinc-100"
 				disabled={!isEditMode}
+				required
+				maxLength={150}
 				onInput={inputChangeHandler(setTitle)}
 				value={title}
 			/>
@@ -58,14 +46,16 @@ export function NoteForm({ note }: Props) {
 				placeholder="Write something here..."
 				className="w-full text-zinc-800 outline-none field-sizing-content dark:text-zinc-300"
 				disabled={!isEditMode}
+				required
+				maxLength={2500}
 				onInput={inputChangeHandler(setContent)}
 				value={content}
 				ref={contentRef}
 			/>
 
 			<Controller
-				title={note.title}
-				content={note.content}
+				title={note?.title}
+				content={note?.content}
 				setTitle={setTitle}
 				setContent={setContent}
 				contentRef={contentRef}
