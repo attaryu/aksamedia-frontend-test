@@ -56,6 +56,14 @@ export function Dropdown({ onOpenChange, open, placeholder, items }: Props) {
 		}
 	}, [isOpen, onOpenChange]);
 
+	const itemClickHandler = useCallback(
+		(fn: () => void) => () => {
+			fn();
+			handleOpenChange();
+		},
+		[handleOpenChange]
+	);
+
 	useEffect(() => {
 		if (isOpen && buttonRef.current && dropdownRef.current) {
 			const verticalCenter = window.innerHeight / 2;
@@ -65,7 +73,6 @@ export function Dropdown({ onOpenChange, open, placeholder, items }: Props) {
 			const buttonDimension = buttonRef.current.getBoundingClientRect();
 			const dropdownDimension = dropdownRef.current.getBoundingClientRect();
 
-			
 			if (buttonDimension.top < verticalCenter) {
 				dropdownRef.current.style.top = '100%';
 			}
@@ -147,7 +154,7 @@ export function Dropdown({ onOpenChange, open, placeholder, items }: Props) {
 							</Link>
 						) : (
 							<button
-								onClick={item.onClick}
+								onClick={itemClickHandler(item.onClick)}
 								key={item.title}
 								className="py-2 px-3 min-w-24"
 							>
