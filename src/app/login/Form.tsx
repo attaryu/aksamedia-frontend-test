@@ -61,13 +61,13 @@ export function Form() {
 				<Input
 					type="email"
 					name="email"
-					placeholder="example@mail.com"
+					placeholder="Default email: johndoe@example.com"
 					required
 				/>
 				<Input
 					type="password"
 					name="password"
-					placeholder="Your password..."
+					placeholder="Default password: 12345678"
 					required
 				/>
 			</div>
