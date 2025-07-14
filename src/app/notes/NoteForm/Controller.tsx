@@ -16,13 +16,20 @@ type Props = {
 	resetHandler?: () => void;
 };
 
+/**
+ * Controller component for managing note actions such as edit, delete, and submit
+ * 
+ * @param props.noteId The ID of the note to manage.
+ * @param props.contentRef Reference to the content textarea for focusing after edit mode is enabled.
+ * @param props.resetHandler Optional function to reset the form fields.
+ */
 export function Controller({ noteId, contentRef, resetHandler }: Props) {
-	const noteStore = useNoteStore();
 	const router = useRouter();
+	const noteStore = useNoteStore();
 	const [deleteMeasurement, setDeleteMeasurement] = useState<boolean>(false);
 	const [isEditMode, setEditMode] = useQueryState<boolean>(
 		'edit',
-		parseAsBoolean.withDefault(!noteId)
+		parseAsBoolean.withDefault(!noteId) // if no noteId is provided, default to edit mode for creating a new note
 	);
 
 	const handleDelete = () => {
@@ -102,6 +109,7 @@ export function Controller({ noteId, contentRef, resetHandler }: Props) {
 					</>
 				)}
 
+				{/* netral state buttons */}
 				{!isEditMode && !deleteMeasurement && (
 					<>
 						<Button

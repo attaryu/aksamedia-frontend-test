@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, type FormEvent } from 'react';
+import type { FormEvent } from 'react';
 
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';

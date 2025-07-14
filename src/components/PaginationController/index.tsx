@@ -13,9 +13,17 @@ type Props = {
 	totalPages: number;
 };
 
+/**
+ * PaginationController component to handle pagination logic and UI.
+ * 
+ * @param props.totalPages The total number of pages available for pagination.
+ */
 export function PaginationController({ totalPages }: Props) {
 	const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1));
 
+	/**
+	 * Generates an array of dropdown items for pagination.
+	 */
 	const dropdownItem = useMemo(
 		() =>
 			Array.from({ length: totalPages }, (_, i) => i + 1).map(

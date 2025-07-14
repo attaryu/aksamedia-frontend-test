@@ -30,7 +30,7 @@ export function Text({ className, tag = 'p', styling, children }: Props) {
 	return (
 		<Tag
 			className={tailwindMerge(
-				textStyles({ styling: styling ?? tag }),
+				textStyles({ styling: styling ?? tag }), // use the tag as default styling
 				className
 			)}
 		>

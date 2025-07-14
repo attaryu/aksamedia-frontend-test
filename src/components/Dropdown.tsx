@@ -30,8 +30,12 @@ type Props = {
 };
 
 /**
- * Dropdown component that displays a button to toggle the dropdown menu.
- * The dropdown can contain links or buttons.
+ * Dropdown component that displays a button to toggle the dropdown menu. The dropdown can contain links or buttons.
+ * 
+ * @param props.open Initial open state of the dropdown.
+ * @param props.onOpenChange Callback function to handle open state changes.
+ * @param props.placeholder Placeholder text for the button when no icon is provided.
+ * @param props.items Array of items to display in the dropdown menu, which can be links or buttons.
  */
 export function Dropdown({ onOpenChange, open, placeholder, items }: Props) {
 	const [isOpen, setOpen] = useState(open || false);
@@ -57,7 +61,7 @@ export function Dropdown({ onOpenChange, open, placeholder, items }: Props) {
 		}
 	}, [isOpen, onOpenChange]);
 
-	const itemClickHandler = useCallback(
+	const closeDropdown = useCallback(
 		(fn: () => void) => () => {
 			fn();
 			handleOpenChange();
@@ -65,9 +69,22 @@ export function Dropdown({ onOpenChange, open, placeholder, items }: Props) {
 		[handleOpenChange]
 	);
 
+	/**
+	 * Position the dropdown menu based on the button's position. Using useEffect to ensure the
+	 * button and dropdown are rendered before calculating positions.
+	 */
 	useEffect(() => {
 		if (isOpen && buttonRef.current && dropdownRef.current) {
+			/**
+			 * The screen height is divided into 2 parts. Produces top and bottom alignment
+			 * to determine the dropdown vertical position.
+			 */
 			const verticalCenter = window.innerHeight / 2;
+
+			/**
+			 * The screen width is divided into 3 parts. Produces left, center, and right alignment
+			 * to determine the dropdown horizontal position.
+			 */
 			const horizontalLeft = window.innerWidth / 3;
 			const horizontalCenter = horizontalLeft * 2;
 
@@ -75,21 +92,21 @@ export function Dropdown({ onOpenChange, open, placeholder, items }: Props) {
 			const dropdownDimension = dropdownRef.current.getBoundingClientRect();
 
 			if (buttonDimension.top < verticalCenter) {
-				dropdownRef.current.style.top = '100%';
+				dropdownRef.current.style.top = '100%'; // render below the button
 			}
 
 			if (buttonDimension.top > verticalCenter) {
-				dropdownRef.current.style.bottom = '100%';
+				dropdownRef.current.style.bottom = '100%'; // render above the button
 			}
 
 			if (buttonDimension.left > horizontalCenter) {
-				dropdownRef.current.style.right = '0';
+				dropdownRef.current.style.right = '0'; // render on the right side of the button
 			} else if (buttonDimension.left > horizontalLeft) {
 				dropdownRef.current.style.left = `${
-					buttonDimension.width / 2 - dropdownDimension.width / 2
+					buttonDimension.width / 2 - dropdownDimension.width / 2 // render in the center of the button
 				}px`;
 			} else if (buttonDimension.left < horizontalLeft) {
-				dropdownRef.current.style.left = '0';
+				dropdownRef.current.style.left = '0'; // render on the left side of the button
 			}
 		}
 	}, [isOpen]);
@@ -151,7 +168,7 @@ export function Dropdown({ onOpenChange, open, placeholder, items }: Props) {
 							</Link>
 						) : (
 							<Button
-								onClick={itemClickHandler(item.onClick)}
+								onClick={closeDropdown(item.onClick)}
 								key={item.title}
 								variant={item.variant}
 								className="m-1 min-w-24 py-2 px-3"

@@ -1,37 +1,34 @@
 'use client';
 
-import type { DetailedHTMLProps, HTMLAttributes } from 'react';
-
 import { debounce } from 'lodash';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { tailwindMerge } from '@/utils/tailwindMerge';
 import { Text } from '../Text';
 
-interface Props
-	extends DetailedHTMLProps<
-		HTMLAttributes<HTMLUListElement>,
-		HTMLUListElement
-	> {
+interface Props {
+	className?: string;
+	children: React.ReactNode;
 	dependency?: unknown[];
 }
 
 /**
  * MasonryContainer component to create a responsive masonry grid layout.
+ *
+ * @param props.className Additional class names for styling.
+ * @param props.children The child elements to be displayed in the masonry grid.
+ * @param props.dependency An array of dependencies that triggers the recalculation of the masonry grid layout when changed.
  */
 export function MasonryContainer({
 	dependency = [],
 	className,
 	children,
-	...props
 }: Props) {
 	const [isLoading, setLoading] = useState(true);
 	const containerRef = useRef<HTMLUListElement | null>(null);
 
 	const calculateMasonryGrid = debounce(
 		useCallback(() => {
-			setLoading(true);
-
 			/**
 			 * get all direct items of the masonry container
 			 */
@@ -39,6 +36,8 @@ export function MasonryContainer({
 				containerRef.current?.querySelectorAll<HTMLLIElement>('.masonry-item');
 
 			if (containerRef.current && items && items.length > 0) {
+				setLoading(true);
+
 				for (const item of items) {
 					const grid = window.getComputedStyle(containerRef.current!);
 					/**
@@ -68,7 +67,7 @@ export function MasonryContainer({
 				items.forEach((item) => {
 					item.style.overflow = 'visible';
 				});
-				
+
 				setLoading(false);
 			}
 		}, []),
@@ -87,7 +86,6 @@ export function MasonryContainer({
 
 	return (
 		<ul
-			{...props}
 			className={tailwindMerge(
 				`masonry-grid grid group grid-cols-2 md:grid-cols-3 gap-4 auto-rows-[0px]`,
 				className

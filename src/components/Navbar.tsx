@@ -18,6 +18,9 @@ export function Navbar() {
 	const { theme, toggleTheme } = useTheme('system');
 	const userStore = useUserStore();
 
+	/**
+	 * Dropdown items based on user login status
+	 */
 	const dropdownItem = useMemo(
 		(): DropdownItem[] =>
 			userStore.user.loggedIn
