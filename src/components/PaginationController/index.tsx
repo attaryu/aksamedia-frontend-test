@@ -44,7 +44,7 @@ export function PaginationController({ totalPages }: Props) {
 	return (
 		<div className="flex bg-white p-1 border border-zinc-700 rounded-xl items-center gap-1 dark:bg-zinc-900 dark:border-zinc-500">
 			<PaginationButton onClick={previousPageHandler} disabled={page === 1}>
-				<ChevronLeft size={20} />
+				<ChevronLeft className="size-6" />
 			</PaginationButton>
 
 			<PaginationButton active>{page}</PaginationButton>
@@ -53,7 +53,7 @@ export function PaginationController({ totalPages }: Props) {
 				onClick={nextPageHandler}
 				disabled={page === totalPages || totalPages === 0}
 			>
-				<ChevronRight size={20} />
+				<ChevronRight className="size-6" />
 			</PaginationButton>
 
 			<Dropdown items={dropdownItem} />

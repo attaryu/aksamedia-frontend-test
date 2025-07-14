@@ -65,6 +65,10 @@ export function MasonryContainer({
 					item.style.gridRowEnd = `span ${rowSpan}`;
 				}
 
+				items.forEach((item) => {
+					item.style.overflow = 'visible';
+				});
+				
 				setLoading(false);
 			}
 		}, []),

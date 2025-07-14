@@ -11,7 +11,7 @@ type Props = {
 
 export function NoteCard({ data }: Props) {
 	return (
-		<section className="border border-primary-200 dark:border-zinc-600 relative rounded-xl p-4 space-y-4">
+		<section className="outline outline-primary-300 dark:outline-zinc-600 relative rounded-xl p-4 space-y-4 hover:shadow-xl transition-all hover:shadow-primary-300/20 hover:-translate-y-1 dark:hover:outline-primary-200 dark:hover:shadow-primary-300/15">
 			<Text tag="h2" styling="h3" className="line-clamp-2">
 				<Link
 					href={`/notes/${data.id}`}

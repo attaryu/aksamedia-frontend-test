@@ -51,11 +51,11 @@ export function Navbar() {
 					<Button
 						onClick={toggleTheme}
 						variant="secondary"
-						className="p-2 bg-white dark:bg-transparent"
+						className="p-2 bg-white"
 					>
-						{theme === 'light' && <Sun />}
-						{theme === 'dark' && <Moon />}
-						{theme === 'system' && <TvMinimal />}
+						{theme === 'light' && <Sun className="size-6 md:size-7" />}
+						{theme === 'dark' && <Moon className="size-6 md:size-7" />}
+						{theme === 'system' && <TvMinimal className="size-6 md:size-7" />}
 					</Button>
 
 					<Dropdown

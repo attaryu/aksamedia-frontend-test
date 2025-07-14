@@ -122,15 +122,15 @@ export function Dropdown({ onOpenChange, open, placeholder, items }: Props) {
 				ref={buttonRef}
 				onClick={handleOpenChange}
 				variant="secondary"
-				className="bg-white p-2 gap-2 dark:bg-transparent"
+				className="p-2 gap-2 "
 			>
 				{placeholder ? (
 					<>
 						{placeholder}
-						<EllipsisVertical size={18} />
+						<EllipsisVertical className="size-4 md:size-6" />
 					</>
 				) : (
-					<Menu />
+					<Menu className="size-6 md:size-7" />
 				)}
 			</Button>
 
@@ -145,7 +145,7 @@ export function Dropdown({ onOpenChange, open, placeholder, items }: Props) {
 								href={item.href}
 								key={item.href}
 								onClick={handleOpenChange}
-								className="py-2 px-3 min-w-24"
+								className="py-2 px-3 min-w-24 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all"
 							>
 								{item.title}
 							</Link>

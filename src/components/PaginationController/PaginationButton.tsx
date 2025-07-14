@@ -16,7 +16,7 @@ export function PaginationButton({
 	return (
 		<Button
 			variant={active ? 'primary' : 'secondary'}
-			className="size-10 p-0 text-base"
+			className="size-10 md:size-11 p-0 text-base"
 			onClick={onClick}
 			disabled={disabled}
 		>

@@ -53,12 +53,12 @@ export function Controller({ noteId, contentRef, resetHandler }: Props) {
 
 	if (noteId) {
 		return (
-			<div className="fixed container-width bottom-4 right-0 container-px flex items-center gap-2">
+			<div className="fixed z-50 container-width bottom-4 right-0 container-px flex items-center gap-2 md:gap-4">
 				{deleteMeasurement && (
 					<>
 						<Text
 							tag="small"
-							className="text-end text-xs mr-2 w-40 text-zinc-900 dark:text-zinc-300"
+							className="text-end text-xs md:text-sm mr-2 w-40 text-zinc-900 dark:text-zinc-300"
 						>
 							Are you sure to delete this note?
 						</Text>
@@ -68,7 +68,7 @@ export function Controller({ noteId, contentRef, resetHandler }: Props) {
 							className="p-3 rounded-full"
 							onClick={() => setDeleteMeasurement(false)}
 						>
-							<X size={24} />
+							<X className="size-6 md:size-7" />
 						</Button>
 
 						<Button
@@ -77,7 +77,7 @@ export function Controller({ noteId, contentRef, resetHandler }: Props) {
 							variant="secondary"
 							onClick={handleDelete}
 						>
-							<Check size={24} />
+							<Check className="size-6 md:size-7" />
 						</Button>
 					</>
 				)}
@@ -93,11 +93,11 @@ export function Controller({ noteId, contentRef, resetHandler }: Props) {
 								resetHandler?.();
 							}}
 						>
-							<X size={24} />
+							<X className="size-6 md:size-7" />
 						</Button>
 
 						<Button type="submit" className="p-3 rounded-full">
-							<Check size={24} />
+							<Check className="size-6 md:size-7" />
 						</Button>
 					</>
 				)}
@@ -110,7 +110,7 @@ export function Controller({ noteId, contentRef, resetHandler }: Props) {
 							variant="secondary"
 							onClick={() => setDeleteMeasurement(true)}
 						>
-							<Trash size={24} />
+							<Trash className="size-6 md:size-7" />
 						</Button>
 
 						<Button
@@ -119,7 +119,7 @@ export function Controller({ noteId, contentRef, resetHandler }: Props) {
 							onClick={editModeSetter}
 							variant="secondary"
 						>
-							<Pencil size={24} />
+							<Pencil className="size-6 md:size-7" />
 						</Button>
 					</>
 				)}
@@ -128,18 +128,18 @@ export function Controller({ noteId, contentRef, resetHandler }: Props) {
 	}
 
 	return (
-		<div className="fixed container-width bottom-4 right-0 container-px flex items-center gap-2">
+		<div className="fixed z-50 container-width bottom-4 right-0 container-px flex items-center gap-2 md:gap-4">
 			<Button
 				type="reset"
 				variant="secondary"
 				className="p-3 rounded-full"
 				onClick={editModeSetter}
 			>
-				<X size={24} />
+				<X className="size-6 md:size-7" />
 			</Button>
 
 			<Button type="submit" className="p-3 rounded-full">
-				<Check size={24} />
+				<Check className="size-6 md:size-7" />
 			</Button>
 		</div>
 	);

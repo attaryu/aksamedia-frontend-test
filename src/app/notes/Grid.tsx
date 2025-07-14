@@ -70,7 +70,7 @@ export default function Grid() {
 			</div>
 
 			<div className="fixed bottom-4 container-width inset-x-0 flex justify-between items-center gap-4 container-px">
-				<div className=" shadow-xl dark:shadow-zinc-100/5">
+				<div className="shadow-xl dark:shadow-zinc-100/5">
 					<PaginationController
 						totalPages={paginationNotes.pagination.totalPage}
 					/>
@@ -78,9 +78,9 @@ export default function Grid() {
 
 				<Link
 					href="/notes/create"
-					className="bg-primary-300 text-white dark:bg-zinc-100 dark:text-zinc-900 p-3  rounded-full shadow-xl dark:shadow-zinc-100/10"
+					className="bg-primary-300 text-white dark:bg-zinc-100 dark:text-zinc-900 hover:bg-primary-400 dark:hover:bg-zinc-400 p-3  rounded-full shadow-xl dark:shadow-zinc-100/10"
 				>
-					<Plus />
+					<Plus className="md:size-7" />
 				</Link>
 			</div>
 		</>

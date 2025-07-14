@@ -53,11 +53,11 @@ export function NoteForm({ note }: Props) {
 	};
 
 	return (
-		<form className="flex flex-col gap-4 pb-20" onSubmit={onSubmitHandler}>
+		<form className="flex flex-col gap-6 pb-20 md:gap-8 mt-6" onSubmit={onSubmitHandler}>
 			<textarea
 				name="title"
 				placeholder="Title"
-				className="w-full text-black outline-none text-xl font-semibold field-sizing-content dark:text-zinc-100"
+				className="w-full text-black outline-none text-2xl font-semibold field-sizing-content dark:text-zinc-100 resize-none"
 				disabled={!isEditMode}
 				required
 				maxLength={150}
@@ -68,7 +68,7 @@ export function NoteForm({ note }: Props) {
 			<textarea
 				name="content"
 				placeholder="Write something here..."
-				className="w-full text-zinc-800 outline-none field-sizing-content dark:text-zinc-300"
+				className="w-full text-zinc-800 outline-none field-sizing-content dark:text-zinc-300  resize-none"
 				disabled={!isEditMode}
 				required
 				maxLength={2500}
