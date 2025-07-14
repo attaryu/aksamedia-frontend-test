@@ -2,6 +2,8 @@
 
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
+import { parseAsInteger, parseAsString, useQueryState } from 'nuqs';
+import { useMemo } from 'react';
 
 import { MasonryGrid } from '@/components/Masonry';
 import { NoteCard } from '@/components/NoteCard';
@@ -9,16 +11,17 @@ import { PaginationController } from '@/components/PaginationController';
 import { Searchbar } from '@/components/Searchbar';
 import { Text } from '@/components/Text';
 
+import { useHydrationLoading } from '@/stores/loading';
 import { useNoteStore } from '@/stores/note';
 import { useUserStore } from '@/stores/user';
-import { parseAsInteger, parseAsString, useQueryState } from 'nuqs';
-import { useMemo } from 'react';
-import { useHydrationLoading } from '@/stores/loading';
+
+import { useLoggedIn } from '@/hooks/useLoggedIn';
 
 export default function Grid() {
+	useLoggedIn();
+
 	const [page] = useQueryState('page', parseAsInteger.withDefault(1));
 	const [search] = useQueryState('search', parseAsString.withDefault(''));
-
 	const userStore = useUserStore();
 	const noteStore = useNoteStore();
 	const { isLoading } = useHydrationLoading();

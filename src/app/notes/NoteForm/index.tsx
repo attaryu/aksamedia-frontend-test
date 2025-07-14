@@ -12,11 +12,15 @@ import { Controller } from './Controller';
 
 import { useNoteStore } from '@/stores/note';
 
+import { useLoggedIn } from '@/hooks/useLoggedIn';
+
 type Props = {
 	note?: INote;
 };
 
 export function NoteForm({ note }: Props) {
+	useLoggedIn();
+
 	const contentRef = useRef<HTMLTextAreaElement>(null);
 	const noteStore = useNoteStore();
 	const router = useRouter();

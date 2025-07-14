@@ -1,18 +1,21 @@
 'use client';
 
-import type { FormEvent } from 'react';
+import { useEffect, type FormEvent } from 'react';
 
 import { useRouter } from 'next/navigation';
 
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
+import { Loading } from '@/components/Loading';
 import { Text } from '@/components/Text';
 
+import { useHydrationLoading } from '@/stores/loading';
 import { useUserStore } from '@/stores/user';
 
 export function Form() {
 	const router = useRouter();
 	const userStore = useUserStore();
+	const { isLoading } = useHydrationLoading();
 
 	const submitHandler = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -24,12 +27,21 @@ export function Form() {
 
 		if (response === true) {
 			alert('Login successful!');
-
 			router.push('/notes');
 		} else {
 			alert(response ?? 'Login failed. Please try again.');
 		}
 	};
+
+	useEffect(() => {
+		if (userStore.user.loggedIn) {
+			router.push('/notes');
+		}
+	}, [router, userStore.user.loggedIn]);
+
+	if (isLoading) {
+		return <Loading />;
+	}
 
 	return (
 		<form className="space-y-10 w-full" onSubmit={submitHandler}>

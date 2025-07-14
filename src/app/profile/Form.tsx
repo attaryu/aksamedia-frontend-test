@@ -5,12 +5,16 @@ import { FormEvent, useEffect, useState } from 'react';
 
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
-
 import { Loading } from '@/components/Loading';
+
 import { useHydrationLoading } from '@/stores/loading';
 import { useUserStore } from '@/stores/user';
 
+import { useLoggedIn } from '@/hooks/useLoggedIn';
+
 export default function Form() {
+	useLoggedIn();
+
 	const userStore = useUserStore();
 	const [user, setUser] = useState(userStore.user);
 	const { isLoading } = useHydrationLoading();
