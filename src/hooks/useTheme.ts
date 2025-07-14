@@ -55,8 +55,10 @@ export function useTheme(value: Theme = 'system') {
 
 		if (storedThemePreference) {
 			setTheme(storedThemePreference);
+		} else {
+			setHTMLClass(value);
 		}
-	}, [setTheme]);
+	}, [setHTMLClass, setTheme, value]);
 
 	return {
 		/**
