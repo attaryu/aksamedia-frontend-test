@@ -2,7 +2,7 @@ import type { ICreateNote, INote, IUpdateNote } from '@/types/note';
 import type { IPaginationResponse } from '@/types/paginationResponse';
 
 import { create } from 'zustand';
-import { createJSONStorage, persist } from 'zustand/middleware';
+import { persist } from 'zustand/middleware';
 
 export type Filter = {
 	search?: string;
@@ -86,7 +86,6 @@ export const useNoteStore = create<INoteStore>()(
 		}),
 		{
 			name: 'NOTO_NOTES',
-			storage: createJSONStorage(() => localStorage),
 		}
 	)
 );

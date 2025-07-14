@@ -1,19 +1,12 @@
+import { IUpdateUser, IUser } from '@/types/user';
 import { create } from 'zustand';
-import { createJSONStorage, persist } from 'zustand/middleware';
-
-export interface IUser {
-	username: string;
-	fullName: string;
-	shortName: string;
-	email: string;
-	password: string;
-	loggedIn?: boolean;
-}
+import { persist } from 'zustand/middleware';
 
 export interface IUserStore {
 	user: IUser;
 	loginUser: (email: string, password: string) => string | true;
 	logoutUser: () => void;
+	updateUser: (user: IUpdateUser) => void;
 }
 
 export const useUserStore = create<IUserStore>()(
@@ -25,6 +18,12 @@ export const useUserStore = create<IUserStore>()(
 				shortName: 'JD',
 				username: 'john_doe',
 				password: '12345678',
+			},
+			updateUser: (user: IUpdateUser) => {
+				set((state) => ({
+					...state,
+					user: { ...state.user, ...user },
+				}));
 			},
 			loginUser: (email, password) => {
 				const { user } = get();
@@ -45,7 +44,6 @@ export const useUserStore = create<IUserStore>()(
 		}),
 		{
 			name: 'NOTO_USER',
-			storage: createJSONStorage(() => localStorage),
 		}
 	)
 );

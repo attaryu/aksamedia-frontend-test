@@ -1,26 +1,61 @@
 'use client';
 
 import { parseAsBoolean, useQueryState } from 'nuqs';
+import { FormEvent, useEffect, useState } from 'react';
 
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
 
+import { Loading } from '@/components/Loading';
+import { useHydrationLoading } from '@/stores/loading';
 import { useUserStore } from '@/stores/user';
 
 export default function Form() {
-	const [isEditMode, setEditMode] = useQueryState<boolean>('edit', {
-		defaultValue: false,
-		parse: parseAsBoolean.parse,
-	});
-
 	const userStore = useUserStore();
+	const [user, setUser] = useState(userStore.user);
+	const { isLoading } = useHydrationLoading();
+	const [isEditMode, setEditMode] = useQueryState<boolean>(
+		'edit',
+		parseAsBoolean.withDefault(false)
+	);
 
 	const toggleEditMode = () => {
-		setEditMode((prev) => !prev);
+		const editMode = !isEditMode;
+		setEditMode(editMode);
+
+		if (!editMode) {
+			setUser(userStore.user);
+		}
 	};
 
+	const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { name, value } = e.target;
+
+		setUser((prevUser) => ({
+			...prevUser,
+			[name]: value,
+		}));
+	};
+
+	const submiHandler = (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+
+		if (isEditMode) {
+			userStore.updateUser(user);
+			setEditMode(false);
+		}
+	};
+
+	useEffect(() => {
+		setUser(userStore.user);
+	}, [userStore.user]);
+
+	if (isLoading) {
+		return <Loading />;
+	}
+
 	return (
-		<form className="space-y-8">
+		<form className="space-y-8" onSubmit={submiHandler}>
 			<div className="space-y-4">
 				<Input
 					type="text"
@@ -28,16 +63,22 @@ export default function Form() {
 					placeholder="Fullname"
 					disabled={!isEditMode}
 					className="w-full"
-					defaultValue={userStore.user.fullName}
+					value={user.fullName}
+					onChange={changeHandler}
+					maxLength={50}
+					required
 				/>
 
 				<Input
 					type="text"
-					name="surname"
+					name="shortName"
 					placeholder="Short Name"
 					disabled={!isEditMode}
 					className="w-full"
-					defaultValue={userStore.user.shortName}
+					value={user.shortName}
+					onChange={changeHandler}
+					maxLength={6}
+					required
 				/>
 
 				<Input
@@ -46,7 +87,10 @@ export default function Form() {
 					placeholder="Username"
 					disabled={!isEditMode}
 					className="w-full"
-					defaultValue={userStore.user.username}
+					value={user.username}
+					onChange={changeHandler}
+					maxLength={20}
+					required
 				/>
 
 				<Input
@@ -55,7 +99,10 @@ export default function Form() {
 					placeholder="Email"
 					disabled={!isEditMode}
 					className="w-full"
-					defaultValue={userStore.user.email}
+					value={user.email}
+					onChange={changeHandler}
+					maxLength={50}
+					required
 				/>
 
 				<Input
@@ -64,7 +111,9 @@ export default function Form() {
 					placeholder="Password"
 					disabled={!isEditMode}
 					className="w-full"
-					defaultValue={userStore.user.password}
+					value={user.password}
+					onChange={changeHandler}
+					required
 				/>
 			</div>
 
