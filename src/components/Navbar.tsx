@@ -43,28 +43,30 @@ export function Navbar() {
 	);
 
 	return (
-		<nav className="flex z-50 bg-primary-300 min-h-16 dark:bg-zinc-800 fixed top-0 inset-x-0 px-4 items-center justify-between">
-			<p className="font-bold text-white text-xl">Noto</p>
+		<nav className="z-50 bg-primary-300 min-h-16 dark:bg-zinc-800 grid place-items-center fixed top-0 inset-x-0">
+			<div className="flex container-width w-full container-px items-center justify-between">
+				<p className="font-bold text-white text-xl">Noto</p>
 
-			<div className="flex gap-2">
-				<Button
-					onClick={toggleTheme}
-					variant="secondary"
-					className="p-2 bg-white dark:bg-transparent"
-				>
-					{theme === 'light' && <Sun />}
-					{theme === 'dark' && <Moon />}
-					{theme === 'system' && <TvMinimal />}
-				</Button>
+				<div className="flex gap-2">
+					<Button
+						onClick={toggleTheme}
+						variant="secondary"
+						className="p-2 bg-white dark:bg-transparent"
+					>
+						{theme === 'light' && <Sun />}
+						{theme === 'dark' && <Moon />}
+						{theme === 'system' && <TvMinimal />}
+					</Button>
 
-				<Dropdown
-					placeholder={
-						userStore.user.loggedIn
-							? `Hello, ${userStore.user.shortName}!`
-							: undefined
-					}
-					items={dropdownItem}
-				/>
+					<Dropdown
+						placeholder={
+							userStore.user.loggedIn
+								? `Hello, ${userStore.user.shortName}!`
+								: undefined
+						}
+						items={dropdownItem}
+					/>
+				</div>
 			</div>
 		</nav>
 	);

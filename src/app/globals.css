@@ -22,3 +22,15 @@ body {
 .debug {
 	@apply outline-1 outline-red-500;
 }
+
+.container-width {
+	@apply max-w-[1400px] mx-auto;
+}
+
+.container-px {
+	@apply px-4 md:px-12 lg:px-24 xl:px-32;
+}
+
+.container-pt {
+	@apply pt-4 md:pt-12 lg:pt-24 xl:pt-32;
+}

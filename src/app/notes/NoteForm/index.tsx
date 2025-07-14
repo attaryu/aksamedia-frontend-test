@@ -21,6 +21,8 @@ type Props = {
 export function NoteForm({ note }: Props) {
 	useLoggedIn();
 
+	const [title, setTitle] = useState<string>(note?.title ?? '');
+	const [content, setContent] = useState<string>(note?.content ?? '');
 	const contentRef = useRef<HTMLTextAreaElement>(null);
 	const noteStore = useNoteStore();
 	const router = useRouter();
@@ -28,9 +30,6 @@ export function NoteForm({ note }: Props) {
 		'edit',
 		parseAsBoolean.withDefault(!note)
 	);
-
-	const [title, setTitle] = useState<string>(note?.title ?? '');
-	const [content, setContent] = useState<string>(note?.content ?? '');
 
 	const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();

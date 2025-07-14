@@ -2,7 +2,7 @@ import { Text } from '@/components/Text';
 
 export default function Home() {
 	return (
-		<main className="h-[80dvh] p-4 flex justify-center items-center gap-4 flex-col">
+		<main className="h-[80dvh] p-4 container-px flex justify-center items-center gap-4 flex-col">
 			<Text tag="h1" className="text-center">
 				Welcome to Noto!
 			</Text>

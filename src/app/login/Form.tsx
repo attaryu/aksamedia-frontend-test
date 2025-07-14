@@ -44,7 +44,10 @@ export function Form() {
 	}
 
 	return (
-		<form className="space-y-10 w-full" onSubmit={submitHandler}>
+		<form
+			className="space-y-10 w-full md:w-1/2 xl:w-1/3"
+			onSubmit={submitHandler}
+		>
 			<div className="space-y-2">
 				<Text tag="h1" styling="h2" className="">
 					Login

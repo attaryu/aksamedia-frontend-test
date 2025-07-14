@@ -53,7 +53,7 @@ export function Controller({ noteId, contentRef, resetHandler }: Props) {
 
 	if (noteId) {
 		return (
-			<div className="fixed bottom-4 right-4 flex items-center gap-2">
+			<div className="fixed container-width bottom-4 right-0 container-px flex items-center gap-2">
 				{deleteMeasurement && (
 					<>
 						<Text
@@ -128,7 +128,7 @@ export function Controller({ noteId, contentRef, resetHandler }: Props) {
 	}
 
 	return (
-		<div className="fixed bottom-4 right-4 flex items-center gap-2">
+		<div className="fixed container-width bottom-4 right-0 container-px flex items-center gap-2">
 			<Button
 				type="reset"
 				variant="secondary"

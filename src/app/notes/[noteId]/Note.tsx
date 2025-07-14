@@ -22,7 +22,7 @@ export function Note({ id }: Props) {
 
 	if (!note) {
 		return (
-			<div className="h-[60dvh] flex flex-col items-center justify-center gap-4">
+			<div className="h-[60dvh] flex flex-col container-px items-center justify-center gap-4">
 				<Text styling="h3">Note not found</Text>
 
 				<Text tag="p" className="text-center">

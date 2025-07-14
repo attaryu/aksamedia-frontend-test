@@ -60,13 +60,13 @@ export default function Form() {
 
 	return (
 		<form className="space-y-8" onSubmit={submiHandler}>
-			<div className="space-y-4">
+			<div className="space-y-4 md:grid md:space-y-0 md:grid-cols-2 md:gap-4">
 				<Input
 					type="text"
 					name="fullName"
 					placeholder="Fullname"
 					disabled={!isEditMode}
-					className="w-full"
+					className="w-full md:col-span-2"
 					value={user.fullName}
 					onChange={changeHandler}
 					maxLength={50}

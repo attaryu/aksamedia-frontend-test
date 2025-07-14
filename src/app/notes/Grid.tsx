@@ -41,7 +41,7 @@ export default function Grid() {
 
 	return (
 		<>
-			<div className="space-y-12 px-4 pt-12 pb-24">
+			<div className="space-y-12 container-px pt-12 pb-24">
 				<section className="space-y-2">
 					<Text tag="h1">Welcome, {userStore.user.shortName}!</Text>
 
@@ -69,18 +69,20 @@ export default function Grid() {
 				</section>
 			</div>
 
-			<div className="fixed bottom-4 left-4 shadow-xl dark:shadow-zinc-100/5">
-				<PaginationController
-					totalPages={paginationNotes.pagination.totalPage}
-				/>
-			</div>
+			<div className="fixed bottom-4 container-width inset-x-0 flex justify-between items-center gap-4 container-px">
+				<div className=" shadow-xl dark:shadow-zinc-100/5">
+					<PaginationController
+						totalPages={paginationNotes.pagination.totalPage}
+					/>
+				</div>
 
-			<Link
-				href="/notes/create"
-				className="bg-primary-300 text-white dark:bg-zinc-100 dark:text-zinc-900 p-3 fixed right-4 bottom-4 rounded-full shadow-xl dark:shadow-zinc-100/10"
-			>
-				<Plus />
-			</Link>
+				<Link
+					href="/notes/create"
+					className="bg-primary-300 text-white dark:bg-zinc-100 dark:text-zinc-900 p-3  rounded-full shadow-xl dark:shadow-zinc-100/10"
+				>
+					<Plus />
+				</Link>
+			</div>
 		</>
 	);
 }

@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function CreateNotePage() {
 	return (
-		<main className="p-4">
+		<main className="container-px">
 			<NoteForm />
 		</main>
 	);

@@ -85,7 +85,7 @@ export function MasonryContainer({
 		<ul
 			{...props}
 			className={tailwindMerge(
-				`masonry-grid grid group grid-cols-2 gap-4 auto-rows-[0px]`,
+				`masonry-grid grid group grid-cols-2 md:grid-cols-3 gap-4 auto-rows-[0px]`,
 				className
 			)}
 			ref={containerRef}

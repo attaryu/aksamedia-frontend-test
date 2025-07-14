@@ -18,7 +18,7 @@ export default async function NotePage({ params }: Props) {
 	const { noteId } = await params;
 
 	return (
-		<main className="p-4">
+		<main className="container-px">
 			<Note id={noteId} />
 		</main>
 	);
