@@ -34,3 +34,7 @@ body {
 .container-pt {
 	@apply pt-4 md:pt-12 lg:pt-24 xl:pt-32;
 }
+
+.tab-focus {
+	@apply focus:outline-2 dark:focus:outline-red-400 focus:outline-red-600 focus:-outline-offset-1
+}

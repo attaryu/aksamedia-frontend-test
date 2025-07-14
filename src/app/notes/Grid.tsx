@@ -78,7 +78,7 @@ export default function Grid() {
 
 				<Link
 					href="/notes/create"
-					className="bg-primary-300 text-white dark:bg-zinc-100 dark:text-zinc-900 hover:bg-primary-400 dark:hover:bg-zinc-400 p-3  rounded-full shadow-xl dark:shadow-zinc-100/10"
+					className="bg-primary-300 tab-focus text-white dark:bg-zinc-100 dark:text-zinc-900 hover:bg-primary-400 dark:hover:bg-zinc-400 p-3  rounded-full shadow-xl dark:shadow-zinc-100/10"
 				>
 					<Plus className="md:size-7" />
 				</Link>

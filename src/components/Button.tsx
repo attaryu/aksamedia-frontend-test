@@ -32,6 +32,7 @@ const buttonStyles = cva(
 export function Button({ variant, className, ...props }: Props) {
 	return (
 		<button
+			tabIndex={0}
 			className={tailwindMerge(buttonStyles({ variant }), className)}
 			{...props}
 		/>

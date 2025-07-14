@@ -145,7 +145,7 @@ export function Dropdown({ onOpenChange, open, placeholder, items }: Props) {
 								href={item.href}
 								key={item.href}
 								onClick={handleOpenChange}
-								className="py-2 px-3 min-w-24 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all"
+								className="py-2 px-3 min-w-24 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all tab-focus"
 							>
 								{item.title}
 							</Link>
