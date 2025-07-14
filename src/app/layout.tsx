@@ -2,7 +2,9 @@ import type { Metadata } from 'next';
 
 import { Poppins } from 'next/font/google';
 import { NuqsAdapter } from 'nuqs/adapters/next';
+import { Suspense } from 'react';
 
+import { Loading } from '@/components/Loading';
 import { Navbar } from '@/components/Navbar';
 
 import './globals.css';
@@ -34,7 +36,7 @@ export default function RootLayout({
 				<NuqsAdapter>
 					<Navbar />
 
-					{children}
+					<Suspense fallback={<Loading />}>{children}</Suspense>
 				</NuqsAdapter>
 			</body>
 		</html>
